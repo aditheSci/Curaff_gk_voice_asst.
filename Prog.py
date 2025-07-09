@@ -6,7 +6,7 @@ from googletrans import Translator
 
 # Function to fetch news by category
 def fetch_news(category):
-    api_key = "YOUR_NEWS_API_KEY"  # Replace with your NewsAPI key
+    api_key = "YOUR_NEWS_API_KEY"  
     categories = {
         "national": "general",
         "international": "world",
@@ -22,17 +22,17 @@ def fetch_news(category):
     if category not in categories:
         return ["Invalid category. Please try again."]
 
-    # Build the API request URL
+    # Building the API request URL
     url = f"https://newsapi.org/v2/top-headlines?category={categories[category]}&country=in&apiKey={api_key}"
     if category == "international":
-        url = f"https://newsapi.org/v2/top-headlines?category=general&apiKey={api_key}"  # For international, fetch without restricting to India
+        url = f"https://newsapi.org/v2/top-headlines?category=general&apiKey={api_key}"  # For international, fetching without restricting to India
 
     response = requests.get(url)
     if response.status_code == 200:
         news_data = response.json()
         articles = news_data.get("articles", [])
         if articles:
-            return [article["title"] for article in articles[:5]]  # Top 5 news titles
+            return [article["title"] for article in articles[:15]]  # Top 15 news titles
         else:
             return ["No news found for this category."]
     else:
